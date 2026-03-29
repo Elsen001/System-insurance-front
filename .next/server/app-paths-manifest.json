@@ -1,0 +1,10 @@
+{
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/(dashboard)/payments/page": "app/(dashboard)/payments/page.js",
+  "/(dashboard)/reports/page": "app/(dashboard)/reports/page.js",
+  "/(dashboard)/policies/[id]/page": "app/(dashboard)/policies/[id]/page.js",
+  "/(dashboard)/agents/page": "app/(dashboard)/agents/page.js",
+  "/(dashboard)/pricing-rules/page": "app/(dashboard)/pricing-rules/page.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
+  "/(dashboard)/policies/page": "app/(dashboard)/policies/page.js"
+}
