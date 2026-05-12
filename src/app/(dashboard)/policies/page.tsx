@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   POLICY_TYPE_LABELS, STATUS_LABELS, PAYMENT_STATUS_LABELS,
-  PAYMENT_STATUS_COLORS, POLICY_STATUS_COLORS, formatCurrency, formatDate
+  PAYMENT_STATUS_COLORS, POLICY_STATUS_COLORS, formatCurrency, formatDate, formatDateTime
 } from "@/lib/utils";
 import { Plus, Eye, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -99,6 +99,7 @@ export default function PoliciesPage() {
                     <th className="text-left px-4 py-3 font-semibold">Müştəri</th>
                     <th className="text-right px-4 py-3 font-semibold">Məbləğ</th>
                     <th className="text-left px-4 py-3 font-semibold">Tarix</th>
+                    <th className="text-left px-4 py-3 font-semibold">Əlavə edilmə</th>
                     <th className="text-left px-4 py-3 font-semibold">Status</th>
                     <th className="text-left px-4 py-3 font-semibold">Ödəniş</th>
                     {role === "admin" && <th className="text-left px-4 py-3 font-semibold">Agent</th>}
@@ -113,6 +114,7 @@ export default function PoliciesPage() {
                       <td className="px-4 py-3">{p.customer_name}</td>
                       <td className="px-4 py-3 text-right font-medium">{formatCurrency(p.premium_amount)}</td>
                       <td className="px-4 py-3 text-xs">{formatDate(p.start_date)} — {formatDate(p.end_date)}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground">{p.created_at ? formatDateTime(p.created_at) : "—"}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${POLICY_STATUS_COLORS[p.status]}`}>
                           {STATUS_LABELS[p.status]}

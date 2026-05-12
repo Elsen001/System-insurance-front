@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   POLICY_TYPE_LABELS, STATUS_LABELS, PAYMENT_STATUS_LABELS,
-  PAYMENT_STATUS_COLORS, POLICY_STATUS_COLORS, formatCurrency, formatDate
+  PAYMENT_STATUS_COLORS, POLICY_STATUS_COLORS, formatCurrency, formatDate, formatDateTime
 } from "@/lib/utils";
 import { ArrowLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -67,6 +67,7 @@ export default function PolicyDetailPage() {
             <Row label="Komissiya" value={formatCurrency(policy.commission_amount)} />
             <Row label="Başlama" value={formatDate(policy.start_date)} />
             <Row label="Bitmə" value={formatDate(policy.end_date)} />
+            <Row label="Əlavə edilmə" value={policy.created_at ? formatDateTime(policy.created_at) : "—"} />
             <Row label="Agent" value={policy.agent_name} />
           </CardContent>
         </Card>

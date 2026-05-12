@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import { authApi, policiesApi } from "@/lib/api";
+import { authApi, policiesApi, reportsApi } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate, formatCurrency, POLICY_TYPE_LABELS } from "@/lib/utils";
-import { Plus, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Plus, X, ChevronDown, ChevronRight, FileText, FileSpreadsheet } from "lucide-react";
 
 const policyTypes = [
   { value: "all", label: "Bütün növlər" },
@@ -260,7 +260,39 @@ export default function AgentsPage() {
                         </div>
                       )}
 
-                      <div className="px-4 py-3 flex justify-end">
+                      <div className="px-4 py-3 flex justify-end gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            const res = await reportsApi.exportAgentPDF(agent.id);
+                            const url = window.URL.createObjectURL(new Blob([res.data]));
+                            const a = document.createElement("a");
+                            a.href = url;
+                            a.download = `agent-${agent.name}-hesabat.pdf`;
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                          }}
+                        >
+                          <FileText size={14} className="mr-1" />PDF
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={async (e) => {
+                            e.stopPropagation();
+                            const res = await reportsApi.exportAgentExcel(agent.id);
+                            const url = window.URL.createObjectURL(new Blob([res.data]));
+                            const a = document.createElement("a");
+                            a.href = url;
+                            a.download = `agent-${agent.name}-hesabat.xlsx`;
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                          }}
+                        >
+                          <FileSpreadsheet size={14} className="mr-1" />Excel
+                        </Button>
                         <Button size="sm" variant="outline" onClick={() => handleToggleActive(agent)}>
                           {agent.is_active ? "Deaktiv et" : "Aktiv et"}
                         </Button>

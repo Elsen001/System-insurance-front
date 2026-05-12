@@ -51,6 +51,7 @@ const emptyForm = {
   condition_operator: "",
   condition_value: "",
   bonus_percent: "",
+  effective_from: "",
 };
 
 export default function PricingRulesPage() {
@@ -87,6 +88,7 @@ export default function PricingRulesPage() {
       condition_operator: rule.condition_operator || "",
       condition_value: rule.condition_value != null ? String(rule.condition_value) : "",
       bonus_percent: rule.bonus_percent != null ? String(rule.bonus_percent) : "",
+      effective_from: rule.effective_from ? rule.effective_from.slice(0, 16) : "",
     });
     setError("");
     setShowForm(true);
@@ -104,6 +106,7 @@ export default function PricingRulesPage() {
       condition_operator: form.condition_operator || null,
       condition_value: form.condition_value !== "" ? Number(form.condition_value) : null,
       bonus_percent: Number(form.bonus_percent),
+      effective_from: form.effective_from || null,
     };
     try {
       if (editingId) {
@@ -191,6 +194,16 @@ export default function PricingRulesPage() {
                     placeholder="məs: 15 (artım) və ya -10 (endirim)"
                   />
                   <p className="text-xs text-muted-foreground">Müsbət = artım, Mənfi = endirim</p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Qüvvəyə minmə tarixi</Label>
+                  <Input
+                    type="datetime-local"
+                    value={form.effective_from}
+                    onChange={e => setF("effective_from", e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">Boş buraxılsa, dərhal tətbiq olunur. Tarix təyin edilsə, yalnız həmin tarixdən sonra yaradılan sığortalara təsir edir.</p>
                 </div>
               </div>
 
@@ -317,6 +330,11 @@ export default function PricingRulesPage() {
                     )}
                     {!rule.condition_field && (
                       <p className="text-xs text-muted-foreground mt-1">Şərtsiz — həmişə tətbiq olunur</p>
+                    )}
+                    {rule.effective_from && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Qüvvəyə minmə: {new Date(rule.effective_from).toLocaleString("az-AZ", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                      </p>
                     )}
                   </div>
 
